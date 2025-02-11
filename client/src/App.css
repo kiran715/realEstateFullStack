@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+body {
+    background-color: rgba(232, 225, 225, 0.56);
+}
+
+.card_data {
+    transition: opacity 1s 1s;
+}
+
+.card_article:hover .card_data {
+    animation: show-data 1s forwards;
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.card_article:hover {
+    animation: remove-overflow 2s forwards;
+}
+
+.card_article:not(:hover) {
+    animation: show-overflow 2s forwards;
+}
+
+.card_article:not(:hover) .card_data {
+    animation: remove-data 1s forwards;
+}
+
+@keyframes show-data {
+    50% {
+        transform: translateY(-10rem);
+    }
+
+    100% {
+        transform: translateY(-7rem);
+    }
+}
+
+@keyframes remove-overflow {
+    to {
+        overflow: initial;
+    }
+}
+
+@keyframes remove-data {
+    0% {
+        transform: translateY(-7rem);
+    }
+
+    50% {
+        transform: translateY(-10rem);
+    }
+
+    100% {
+        transform: translateY(.5rem);
+    }
+}
+
+@keyframes show-overflow {
+    0% {
+        overflow: initial;
+        pointer-events: none;
+    }
+
+    50% {
+        overflow: hidden;
+    }
+}
