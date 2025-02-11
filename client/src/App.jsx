@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Form from "./components/Form";
 import View from "./pages/View";
 import Edit from "./pages/Edit";
-
+// This is for sample update
 function App() {
     return (
         <BrowserRouter>
