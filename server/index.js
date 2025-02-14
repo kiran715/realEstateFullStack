@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-    .connect(process.env.MONGO_URL)
+    .connect("mongodb://127.0.0.1:27017/sampleDB")
     .then((res) => {
         console.log("DB connected");
     })
@@ -21,34 +21,34 @@ mongoose
         console.log("Error connecting in DB" + err);
     });
 
-const propertySchema = new mongoose.Schema({
-    buyerName: { type: String, required: true },
-    propertyType: { type: String, required: true },
-    priceRange: { type: String, required: true },
-    location: { type: String, required: true },
+const applicationSchema = new mongoose.Schema({
+    applicantName: { type: String, required: true },
+    position: { type: String, required: true },
+    skills: { type: String, required: true },
+    experience: { type: String, required: true },
     phoneNo: { type: String, required: true },
     email: { type: String, required: true },
-    propertyImage: { type: String, required: true },
+    profileImage: { type: String, required: true },
 });
 
-const propertyModel = mongoose.model("property", propertySchema);
+const Application = mongoose.model("Application", applicationSchema);
 
 app.post("/add", async (req, res) => {
     try {
-        const newProperty = new propertyModel(req.body);
-        await newProperty.save();
+        const newApplication = new Application(req.body);
+        await newApplication.save();
         console.log("Data Stored");
-        res.status(200).json({ message: "New property added!!" });
+        res.status(200).json({ message: "New jobData added!!" });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: "Error creating property" });
+        res.status(500).json({ message: "Error creating jobData" });
     }
 });
 
 app.get("/", async (req, res) => {
     try {
-        const propertyData = await propertyModel.find();
-        res.status(200).send(propertyData);
+        const applicationData = await Application.find();
+        res.status(200).send(applicationData);
     } catch (err) {
         console.log(err);
         res.send(500).json({ message: "Error in getting data", error: err });
@@ -58,9 +58,9 @@ app.get("/", async (req, res) => {
 app.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const propData = await propertyModel.findById(id);
+        const appData = await Application.findById(id);
         // console.log(propData);
-        res.status(200).json(propData);
+        res.status(200).json(appData);
     } catch (error) {
         res.status(500).json({ message: "Error in getting by id" });
     }
@@ -69,14 +69,10 @@ app.get("/:id", async (req, res) => {
 app.put("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const updatedData = await propertyModel.findByIdAndUpdate(
-            id,
-            req.body,
-            {
-                new: true,
-                runValidators: true,
-            }
-        );
+        const updatedData = await Application.findByIdAndUpdate(id, req.body, {
+            new: true,
+            runValidators: true,
+        });
         // await updatedData.save();
         res.status(200).json({ message: "Data Updated!!!" });
     } catch (error) {
@@ -87,7 +83,7 @@ app.put("/:id", async (req, res) => {
 app.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        await propertyModel.findByIdAndDelete(id);
+        await Application.findByIdAndDelete(id);
         res.status(200).json({ message: "Data deleted!!!" });
     } catch (error) {
         res.status(500).json({ message: "Error in Deleting!!!" });

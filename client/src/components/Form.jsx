@@ -2,152 +2,182 @@ import { useState } from "react";
 import api from "../axiosapi/api";
 
 const Form = () => {
-    const [estateData, setEstateData] = useState({
-        buyerName: "",
-        propertyType: "",
-        priceRange: "",
-        location: "",
-        phoneNo: "",
-        email: "",
-        propertyImage: "",
-    });
+	const [jobData, setJobData] = useState({
+		applicantName: "",
+		position: "",
+		skills: "",
+		experience: "",
+		phoneNo: "",
+		linkedIn: "",
+		profileImage: "",
+	});
 
-    const handleChange = (e) => {
-        e.preventDefault();
-        const { name, value } = e.target;
-        setEstateData((curr) => {
-            return { ...curr, [name]: value };
-        });
-    };
+	const handleChange = (e) => {
+		e.preventDefault();
+		const { name, value } = e.target;
+		setJobData((curr) => {
+			return { ...curr, [name]: value };
+		});
+	};
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await api.post("/add", estateData);
-            setEstateData({
-                buyerName: "",
-                propertyType: "",
-                priceRange: "",
-                location: "",
-                phoneNo: "",
-                email: "",
-                propertyImage: "",
-            });
-            alert("Data posted successfully");
-        } catch (err) {
-            alert("Error in posting Data" + err);
-        }
-    };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			await api.post("/add", jobData);
+			setJobData({
+				applicantName: "",
+				position: "",
+				skills: "",
+				experience: "",
+				phoneNo: "",
+				email: "",
+				profileImage: "",
+			});
+			alert("Data posted successfully");
+		} catch (err) {
+			alert("Error in posting Data" + err);
+		}
+	};
 
-    console.log(estateData);
+	console.log(jobData);
 
-    return (
-        <div className="max-w-[1224px] mx-auto">
-            <div className="text-center text-3xl font-semibold">
-                <h1>Property Upload Form</h1>
-            </div>
-            <form
-                className="flex flex-col px-6 py-4 gap-4"
-                onSubmit={handleSubmit}>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">Buyer Name</label>
-                    <input
-                        type="text"
-                        placeholder="Buyers Name"
-                        name="buyerName"
-                        value={estateData.buyerName}
-                        className="w-full mt-2 pt-2 placeholder:pl-2 outline-none transition-all ease-in-out focus:border-b-[1px]"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">Property Type</label>
-                    <select
-                        className="mt-2 py-2 w-full outline-none focus:border-b-[1px]"
-                        name="propertyType"
-                        value={estateData.propertyType}
-                        onChange={handleChange}>
-                        <option value="">Select Property</option>
-                        <option value="Commercial">Commercial</option>
-                        <option value="Residential">Residential</option>
-                        <option value="Land&Plots">Land & Plots</option>
-                        <option value="Rental">Rental</option>
-                        <option value="Apartment">Apartment</option>
-                        <option value="Villa">Villa</option>
-                        <option value="Duplex">Duplex</option>
-                    </select>
-                </div>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">Price Range</label>
-                    <input
-                        type="text"
-                        placeholder="Price Range"
-                        value={estateData.priceRange}
-                        className="focus:border-b-[1px] w-full mt-2 pt-2 placeholder:pl-2 outline-none"
-                        name="priceRange"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">
-                        Location Preferences
-                    </label>
-                    <select
-                        className="mt-2 py-2 w-full outline-none focus:border-b-[1px]"
-                        name="location"
-                        value={estateData.location}
-                        onChange={handleChange}>
-                        <option value="">Select Location</option>
-                        <option value="Chennai">Chennai</option>
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Hyderabad">Hyderabad</option>
-                        <option value="Kerala">Kerala</option>
-                    </select>
-                </div>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">Phone No</label>
-                    <input
-                        type="text"
-                        placeholder="Phone Number"
-                        value={estateData.phoneNo}
-                        className="focus:border-b-[1px] w-full mt-2 pt-2 placeholder:pl-2 outline-none"
-                        name="phoneNo"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">Email</label>
-                    <input
-                        type="email"
-                        placeholder="Email Address"
-                        name="email"
-                        value={estateData.email}
-                        className="focus:border-b-[1px] w-full mt-2 pt-2 placeholder:pl-2 outline-none"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="w-full">
-                    <label className="text-[1.2rem] block">
-                        Property Image
-                    </label>
-                    <input
-                        type="url"
-                        placeholder="Property Image"
-                        name="propertyImage"
-                        value={estateData.propertyImage}
-                        className="focus:border-b-[1px] w-full mt-2 pt-2 placeholder:pl-2 outline-none"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="w-full">
-                    <button className="bg-blue-600 px-6 py-2 rounded-xl w-full cursor-pointer">
-                        submit
-                    </button>
-                </div>
-            </form>
-        </div>
-    );
+	return (
+		<div className="mx-auto mt-10 max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+			<h1 className="mb-6 text-center text-3xl font-bold">
+				jobData Upload Form
+			</h1>
+			<form className="space-y-4" onSubmit={handleSubmit}>
+				{/** Applicant Name **/}
+				<div>
+					<label className="block text-lg font-medium">
+						Applicant Name
+					</label>
+					<input
+						type="text"
+						name="applicantName"
+						value={jobData.applicantName || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+						placeholder="Enter your name"
+					/>
+				</div>
+
+				{/** Position **/}
+				<div>
+					<label className="block text-lg font-medium">
+						Position
+					</label>
+					<select
+						name="position"
+						value={jobData.position || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+					>
+						<option value="">Select Position</option>
+						<option value="Software Engineer">
+							Software Engineer
+						</option>
+						<option value="Data Engineer">Data Engineer</option>
+						<option value="Full Stack Developer">
+							Full Stack Developer
+						</option>
+						<option value="Data Analyst">Data Analyst</option>
+						<option value="DevOps Engineer">DevOps Engineer</option>
+						<option value="Data Scientist">Data Scientist</option>
+						<option value="Backend Developer">
+							Backend Developer
+						</option>
+					</select>
+				</div>
+
+				{/** Skills **/}
+				<div>
+					<label className="block text-lg font-medium">Skills</label>
+					<input
+						type="text"
+						name="skills"
+						value={jobData.skills || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+						placeholder="Enter skills"
+					/>
+				</div>
+
+				{/** Experience **/}
+				<div>
+					<label className="block text-lg font-medium">
+						Experience
+					</label>
+					<select
+						name="experience"
+						value={jobData.experience || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+					>
+						<option value="">Choose Experience</option>
+						<option value="0-1 Years">0-1 Years</option>
+						<option value="1-3 Years">1-3 Years</option>
+						<option value="4-7 Years">4-7 Years</option>
+						<option value="8+ Years">8+ Years</option>
+						<option value="Student">Student</option>
+					</select>
+				</div>
+
+				{/** Phone Number **/}
+				<div>
+					<label className="block text-lg font-medium">
+						Phone Number
+					</label>
+					<input
+						type="text"
+						name="phoneNo"
+						value={jobData.phoneNo || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+						placeholder="Enter phone number"
+					/>
+				</div>
+
+				{/** Email **/}
+				<div>
+					<label className="block text-lg font-medium">Email</label>
+					<input
+						type="email"
+						name="email"
+						value={jobData.email || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+						placeholder="Enter email"
+					/>
+				</div>
+
+				{/** Profile Image **/}
+				<div>
+					<label className="block text-lg font-medium">
+						Profile Image URL
+					</label>
+					<input
+						type="url"
+						name="profileImage"
+						value={jobData.profileImage || ""}
+						onChange={handleChange}
+						className="w-full rounded-lg border p-3 focus:ring focus:ring-blue-300"
+						placeholder="Enter image URL"
+					/>
+				</div>
+
+				{/** Submit Button **/}
+				<div>
+					<button
+						type="submit"
+						className="w-full rounded-lg bg-blue-600 py-3 font-bold text-white transition hover:bg-blue-700"
+					>
+						Submit
+					</button>
+				</div>
+			</form>
+		</div>
+	);
 };
 
 export default Form;

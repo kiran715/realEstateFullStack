@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../axiosapi/api";
 
 const View = () => {
-	const [property, setProperty] = useState({});
+	const [jobData, setJobData] = useState({});
 	const { id } = useParams();
 	const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ const View = () => {
 		const fetchData = async () => {
 			try {
 				const response = await api.get(`/${id}`);
-				setProperty(response.data);
+				setJobData(response.data);
 			} catch (error) {
 				console.log("Error in fetching by id" + error);
 			}
@@ -19,35 +19,41 @@ const View = () => {
 		fetchData();
 	}, [id]);
 
-	console.log(property);
+	console.log(jobData);
 	return (
 		<main className="mx-auto max-w-7xl p-6">
 			<div className="grid h-[80dvh] grid-cols-1 gap-8 md:grid-cols-3">
 				<div className="col-span-2 flex justify-center">
 					<img
-						src={property.propertyImage}
-						alt={property.propertyType}
-						className="h-auto w-full rounded-2xl object-cover shadow-lg md:max-w-3xl"
+						src={jobData.profileImage}
+						alt={jobData.applicantName}
+						className="h-auto w-full transform rounded-xl object-cover shadow-2xl transition-transform duration-300 hover:scale-105 md:max-w-2xl"
 					/>
 				</div>
 
-				<div className="flex flex-col items-center justify-center space-y-4">
-					<h1 className="text-3xl font-bold text-gray-800">
-						{property.propertyType}
+				<div className="flex flex-col items-center justify-center space-y-6 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 p-8 text-white shadow-lg">
+					<h1 className="text-4xl font-extrabold drop-shadow-lg">
+						{jobData.applicantName}
 					</h1>
-					<p className="text-lg text-gray-600">
-						<span className="font-semibold">Price Range:</span>{" "}
-						{property.priceRange}
-					</p>
-					<p className="text-lg text-gray-600">
-						<span className="font-semibold">Location:</span>{" "}
-						{property.location}
-					</p>
+					<div className="space-y-3 text-lg">
+						<p className="flex items-center gap-2">
+							<span className="font-semibold">Position:</span>{" "}
+							{jobData.position}
+						</p>
+						<p className="flex items-center gap-2">
+							<span className="font-semibold">Skills:</span>{" "}
+							{jobData.skills}
+						</p>
+						<p className="flex items-center gap-2">
+							<span className="font-semibold">Experience:</span>{" "}
+							{jobData.experience}
+						</p>
+					</div>
 					<button
-						className="cursor-pointer rounded-lg bg-gradient-to-tl from-cyan-600 to-purple-600 px-6 py-2 text-lg text-white"
+						className="transform cursor-pointer rounded-full bg-pink-500 px-6 py-3 text-lg font-semibold shadow-md transition-all hover:scale-105 hover:bg-pink-600"
 						onClick={() => navigate("/")}
 					>
-						back
+						Back
 					</button>
 				</div>
 			</div>

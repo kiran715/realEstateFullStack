@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://realestate-client-3avd.onrender.com",
+    baseURL: "http://localhost:5000",
 });
 
 export default api;
